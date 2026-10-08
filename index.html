@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEasy - E-Commerce App</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        /* Header */
+        header {
+            background: #2874f0;
+            color: white;
+            padding: 15px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 550px;
+            display: flex;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .search-box button {
+            padding: 12px 18px;
+            border: none;
+            background: #ff9f00;
+            color: white;
+            cursor: pointer;
+        }
+
+        .cart-btn {
+            background: white;
+            color: #2874f0;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Hero */
+        .hero {
+            margin: 25px auto;
+            width: 86%;
+            padding: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2874f0, #6c5ce7);
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .shop-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            background: #ff9f00;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Products */
+        .products-section {
+            width: 86%;
+            margin: auto;
+        }
+
+        .products-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+        }
+
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .product h3 {
+            margin: 10px 0;
+        }
+
+        .price {
+            color: #2874f0;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 10px;
+            background: #2874f0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: #1255c4;
+        }
+
+        .heart {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            border: none;
+            background: white;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* Cart */
+        .cart {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 350px;
+            height: 100%;
+            background: white;
+            box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+            padding: 25px;
+            transition: 0.4s;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .cart.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .close-cart {
+            border: none;
+            background: red;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .quantity button {
+            padding: 3px 8px;
+            margin: 3px;
+            cursor: pointer;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .checkout {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #ff9f00;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            padding: 25px;
+            text-align: center;
+            background: #172337;
+            color: white;
+        }
+
+        /* Mobile */
+        @media(max-width: 600px) {
+            header {
+                flex-wrap: wrap;
+            }
+
+            .search-box {
+                order: 3;
+                width: 100%;
+            }
+
+            .hero {
+                padding: 30px 15px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .cart {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">🛍️ ShopEasy</div>
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="search"
+                placeholder="Search products..."
+                onkeyup="searchProducts()"
+            >
+            <button>🔍</button>
+        </div>
+
+        <button class="cart-btn" onclick="openCart()">
+            🛒 Cart (<span id="cartCount">0</span>)
+        </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome to ShopEasy</h1>
+        <p>Best products at the best prices</p>
+        <button class="shop-btn" onclick="scrollToProducts()">
+            Shop Now
+        </button>
+    </section>
+
+    <!-- Products -->
+    <section class="products-section" id="productSection">
+
+        <h2>🔥 Popular Products</h2>
+
+        <div class="products" id="products">
+
+            <div class="product" data-name="Smart Phone">
+                <button class="heart" onclick="favorite(this)">♡</button>
+
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80">
+
+                <h3>Smart Phone</h3>
+
+                <p class="price">₹24,999</p>
+
+                <button class="add-btn"
+                    onclick="addToCart('Smart Phone',24999,
+                    'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80')">
+                    Add to Cart
+                </button>
+            </div>
+
+
+            <div class="product" data-name="Laptop">
+                <button class="heart" onclick="favorite(this)">♡</button>
+
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80">
+
+                <h3>Laptop</h3>
+
+                <p class="price">₹59,999</p>
+
+                <button class="add-btn"
+                    onclick="addToCart('Laptop',59999,
+                    'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80')">
+                    Add to Cart
+                </button>
+            </div>
+
+
+            <div class="product" data-name="Headphones">
+                <button class="heart" onclick="favorite(this)">♡</button>
+
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80">
+
+                <h3>Headphones</h3>
+
+                <p class="price">₹2,499</p>
+
+                <button class="add-btn"
+                    onclick="addToCart('Headphones',2499,
+                    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80')">
+                    Add to Cart
+                </button>
+            </div>
+
+
+            <div class="product" data-name="Smart Watch">
+                <button class="heart" onclick="favorite(this)">♡</button>
+
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80">
+
+                <h3>Smart Watch</h3>
+
+                <p class="price">₹3,999</p>
+
+                <button class="add-btn"
+                    onclick="addToCart('Smart Watch',3999,
+                    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80')">
+                    Add to Cart
+                </button>
+            </div>
+
+
+            <div class="product" data-name="Camera">
+                <button class="heart" onclick="favorite(this)">♡</button>
+
+                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=500&q=80">
+
+                <h3>Camera</h3>
+
+                <p class="price">₹45,999</p>
+
+                <button class="add-btn"
+                    onclick="addToCart('Camera',45999,
+                    'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=500&q=80')">
+                    Add to Cart
+                </button>
+            </div>
+
+
+            <div class="product" data-name="Shoes">
+                <button class="heart" onclick="favorite(this)">♡</button>
+
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80">
+
+                <h3>Running Shoes</h3>
+
+                <p class="price">₹2,999</p>
+
+                <button class="add-btn"
+                    onclick="addToCart('Running Shoes',2999,
+                    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80')">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Cart -->
+    <div class="cart" id="cart">
+
+        <div class="cart-header">
+            <h2>🛒 My Cart</h2>
+
+            <button class="close-cart" onclick="closeCart()">
+                X
+            </button>
+        </div>
+
+        <div id="cartItems"></div>
+
+        <div class="total">
+            Total: ₹<span id="total">0</span>
+        </div>
+
+        <button class="checkout" onclick="checkout()">
+            Proceed to Checkout
+        </button>
+
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 ShopEasy | All Rights Reserved</p>
+    </footer>
+
+
+    <script>
+
+        let cart = [];
+
+
+        // Add product to cart
+        function addToCart(name, price, image) {
+
+            let existing = cart.find(item => item.name === name);
+
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+
+            updateCart();
+
+            alert(name + " added to cart!");
+        }
+
+
+        // Update cart
+        function updateCart() {
+
+            let cartItems = document.getElementById("cartItems");
+
+            cartItems.innerHTML = "";
+
+            let total = 0;
+            let count = 0;
+
+            cart.forEach((item, index) => {
+
+                total += item.price * item.quantity;
+                count += item.quantity;
+
+                cartItems.innerHTML += `
+
+                    <div class="cart-item">
+
+                        <img src="${item.image}">
+
+                        <div>
+                            <strong>${item.name}</strong>
+
+                            <p>₹${item.price}</p>
+
+                            <div class="quantity">
+
+                                <button onclick="decrease(${index})">
+                                    -
+                                </button>
+
+                                ${item.quantity}
+
+                                <button onclick="increase(${index})">
+                                    +
+                                </button>
+
+                                <button onclick="removeItem(${index})">
+                                    🗑️
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                `;
+            });
+
+            document.getElementById("total").innerText =
+                total.toLocaleString("en-IN");
+
+            document.getElementById("cartCount").innerText = count;
+        }
+
+
+        // Increase quantity
+        function increase(index) {
+
+            cart[index].quantity++;
+
+            updateCart();
+        }
+
+
+        // Decrease quantity
+        function decrease(index) {
+
+            if (cart[index].quantity > 1) {
+
+                cart[index].quantity--;
+
+            } else {
+
+                cart.splice(index, 1);
+
+            }
+
+            updateCart();
+        }
+
+
+        // Remove item
+        function removeItem(index) {
+
+            cart.splice(index, 1);
+
+            updateCart();
+        }
+
+
+        // Open cart
+        function openCart() {
+
+            document.getElementById("cart")
+                .classList.add("active");
+        }
+
+
+        // Close cart
+        function closeCart() {
+
+            document.getElementById("cart")
+                .classList.remove("active");
+        }
+
+
+        // Search products
+        function searchProducts() {
+
+            let search =
+                document.getElementById("search")
+                .value.toLowerCase();
+
+            let products =
+                document.querySelectorAll(".product");
+
+            products.forEach(product => {
+
+                let name =
+                    product.dataset.name.toLowerCase();
+
+                if (name.includes(search)) {
+
+                    product.style.display = "block";
+
+                } else {
+
+                    product.style.display = "none";
+
+                }
+
+            });
+        }
+
+
+        // Favorite
+        function favorite(button) {
+
+            if (button.innerText === "♡") {
+
+                button.innerText = "♥";
+                button.style.color = "red";
+
+            } else {
+
+                button.innerText = "♡";
+                button.style.color = "black";
+
+            }
+        }
+
+
+        // Scroll to products
+        function scrollToProducts() {
+
+            document.getElementById("productSection")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+        }
+
+
+        // Checkout
+        function checkout() {
+
+            if (cart.length === 0) {
+
+                alert("Your cart is empty!");
+
+            } else {
+
+                alert(
+                    "Order placed successfully! 🎉\n\n" +
+                    "Thank you for shopping with ShopEasy."
+                );
+
+                cart = [];
+
+                updateCart();
+
+                closeCart();
+            }
+        }
+
+    </script>
+
+</body>
+</html>
